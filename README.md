@@ -11,10 +11,12 @@ Also, can store comment and vote for each product.
 
 ## Tech Stack
 
-**Server:** Java, Spring
+**Server:** Java(17), Spring Boot(2.6.2)
 
-**Database:** Postgres
+**Database:** PostgresSQL
 
+## Database ERD
+[![ERD](./src/main/resources/static/images/erd.png)]()
 
 ## Run Locally
 
