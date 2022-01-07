@@ -18,8 +18,8 @@ public class ProductConfigDto {
     private Boolean visible;
     private Boolean commentable;
     private Boolean votable;
-    private Role commentRole;
-    private Role voteRole;
+    private Role commenterRole;
+    private Role voterRole;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -30,8 +30,8 @@ public class ProductConfigDto {
                 .visible(productConfig.getVisible())
                 .commentable(productConfig.getCommentable())
                 .votable(productConfig.getVotable())
-                .commentRole(productConfig.getCommenterRole())
-                .voteRole(productConfig.getVoterRole())
+                .commenterRole(productConfig.getCommenterRole())
+                .voterRole(productConfig.getVoterRole())
                 .createdAt(productConfig.getCreatedAt())
                 .updatedAt(productConfig.getUpdatedAt())
                 .build();
