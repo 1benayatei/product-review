@@ -18,15 +18,15 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @GetMapping(API_V1_PRODUCT_GET )
+    @GetMapping(API_V1_PRODUCT_GET)
     @ResponseStatus(OK)
     public ProductDetailDto getProductDetail(@PathVariable long id) {
         var productDetail = productService.getDetail(id);
 
         return new ProductDetailDto(
-                productDetail.comments().stream().map(CommentDto::of).toList(),
                 productDetail.commentCount(),
                 productDetail.productScore(),
+                productDetail.comments().stream().map(CommentDto::of).toList(),
                 ProductConfigDto.of(productDetail.config())
         );
     }

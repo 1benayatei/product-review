@@ -4,6 +4,7 @@ import com.example.review.comment.exception.CommentAlreadyAcceptedException;
 import com.example.review.comment.exception.CommentAlreadyRejectedException;
 import com.example.review.comment.exception.CommentNotAllowedException;
 import com.example.review.comment.exception.CommentNotFoundException;
+import com.example.review.product.config.ProductConfig;
 import com.example.review.product.config.ProductConfigService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,11 +24,15 @@ public class DefaultCommentService implements CommentService {
     @Override
     public Comment store(Comment comment) {
         var productConfig = productConfigService.getByProductId(comment.getProductId());
+        checkAllowedComment(productConfig);
+        //TODO: check user role
+        return commentRepository.save(comment);
+    }
+
+    private void checkAllowedComment(ProductConfig productConfig) {
         if (Boolean.FALSE.equals(productConfig.getCommentable()) || Boolean.FALSE.equals(productConfig.getVisible())) {
             throw new CommentNotAllowedException();
         }
-        //TODO: check user role
-        return commentRepository.save(comment);
     }
 
     @Override
@@ -48,6 +53,6 @@ public class DefaultCommentService implements CommentService {
 
     @Override
     public List<Comment> getLast3Comments(long productId) {
-        return commentRepository.findTop3ByProductIdOrderByCreatedAtDesc(productId);
+        return commentRepository.findTop3ByProductIdAndStatusOrderByCreatedAtDesc(productId, ACCEPTED);
     }
 }

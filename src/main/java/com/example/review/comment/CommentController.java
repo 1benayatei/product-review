@@ -5,6 +5,8 @@ import com.example.review.comment.dto.CommentUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 import static com.example.review.common.UrlMappings.API_V1_COMMENT_CREATION;
 import static com.example.review.common.UrlMappings.API_V1_COMMENT_UPDATE;
 import static org.springframework.http.HttpStatus.NO_CONTENT;
@@ -16,14 +18,14 @@ public class CommentController {
 
     @ResponseStatus(NO_CONTENT)
     @PostMapping(API_V1_COMMENT_CREATION)
-    public void create(@RequestBody CommentCreationDto data) {
+    public void create(@Valid @RequestBody CommentCreationDto data) {
         var comments = data.toComment();
         commentService.store(comments);
     }
 
     @ResponseStatus(NO_CONTENT)
     @PatchMapping(API_V1_COMMENT_UPDATE)
-    public void accepted(@PathVariable Long id, @RequestBody CommentUpdateDto data) {
+    public void accepted(@PathVariable Long id, @Valid @RequestBody CommentUpdateDto data) {
         commentService.update(id, data.toComment());
     }
 }
